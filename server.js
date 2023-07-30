@@ -10,13 +10,22 @@ const PORT = process.env.PORT;
 
 const data = require('./data/weather.json');
 
+class Forecast {
+     constructor(weatherObj) {
+          this.date = weatherObj.date;
+          this.description = weatherOnj.description;
+     }
+}
+
 app.get('/', (request, response) => {
-     response.send(data);
+     response.send("City Explorer!");
 })
 
 app.get('/weather', (request, response) => {
      response.send(data);
 })
+    
+
 
 
 

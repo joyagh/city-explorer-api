@@ -16,10 +16,10 @@ class Forecast {
     this.description = description;
   }
 }
-
-app.get("/", (request, response) => {
+const proofOfLife = (request, response) => {
   response.send("City Explorer!");
-});
+}
+app.get("/", proofOfLife);
 
 app.get("/weather", (request, response) => {
      // http://localhost:4001/weather?lat=47.60621&lon=-122.33207&searchQuery=Seattle

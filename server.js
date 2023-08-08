@@ -1,12 +1,14 @@
 const express = require("express");
 const cors = require("cors");
+const axios = require("axios");
 
 const app = express();
 app.use(cors());
 
 require("dotenv").config();
-
+const apiKey = process.env.WEATHER_API_KEY;
 const PORT = process.env.PORT;
+const movieKey = process.env.MOVIE_API_KEY;
 
 const data = require("./data/weather.json");
 
@@ -21,25 +23,30 @@ const proofOfLife = (request, response) => {
 }
 app.get("/", proofOfLife);
 
-app.get("/weather", (request, response) => {
-     // http://localhost:4001/weather?lat=47.60621&lon=-122.33207&searchQuery=Seattle
+app.get("/weather", async (request, response) => {
+     // http://localhost:4001/weather
 
   try {
-    let result = data.find(
-      (city) =>
-        city.city_name === request.query.searchQuery &&
-        city.lat === request.query.lat
-    );
+    let result = data.find((city) =>
+        city.city_name === request.query.searchQuery);
+
+    if (result) {
     let dates = result.data.map((day) => {
       let forecast = new Forecast(day.valid_date, day.weather.description);
-      console.log(day);
+      // console.log(day);
       return forecast;
     });
     response.send(dates);
-  } catch (error) {
+  } else {
     response.status(404).send({ error: "City not found." });
   }
+  } catch (error) {
+    response.status(500).send({error: "An error has occured"});
+  }
 });
+// app.get("./movies" (request, response) => {
+
+// })
 
 // "city_name": "Seattle",
 //      "lon": "-122.33207",

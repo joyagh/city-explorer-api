@@ -1,6 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
+const {proofOfLife} = require("./controllers");
+const { weatherHandler } = require("./controllers/weather");
+
+
 
 const app = express();
 app.use(cors());
@@ -18,42 +22,33 @@ class Forecast {
     this.description = description;
   }
 }
-const proofOfLife = (request, response) => {
-  response.send("City Explorer!");
-};
+//TODO Create movie class; title, image, description
+
 app.get("/", proofOfLife);
 
-app.get("/weather", async (request, response) => {
-  // http://localhost:4001/weather?lon=-122.33207&lat=47.60621
-  console.log(request.query);
-  try {
-    const weatherData = await axios.get(
-      `https://api.weatherbit.io/v2.0/forecast/daily?key=${apiKey}&days=16&lat=${request.query.lat}&lon=${request.query.lon}`
-    );
-    
-    if (weatherData) {
-      /* let dates = []
-      for (let i = 0; i < 10; i++){
-        dates.push(new Forecast(weatherData.data.data[i].datetime, weatherData.data.data[i].weather.description))
-      }
-      */
-      let dates = weatherData.data.data.map((day) => {
-        let forecast = new Forecast(day.datetime, day.weather.description);
-        // console.log(day);
-        return forecast;
-      });
-      console.log(dates);
-      response.send(dates);
-    } else {
-      response.status(404).send({ error: "City not found." });
-    }
-  } catch (error) {
-    response.status(404).send({ error: "City not found." });
-  }
-});
-// app.get("/movies" (request, response) => {
+  
+app.get("/weather", weatherHandler);
 
+
+app.get("./movies", moviesHandler);
+
+
+//  const movieData = await axios.get("url")
+
+//   movies.filter((movie) => {
+//    if (movie.title.includes("word")){
+//       movieData.push(movie.title)
+//    }
+   
 // })
+// use includes instead of if statement
+// use return instead of push.
+// Comm
+// Make query string
+//  url = https://api.themoviedb.org/3/search/movie
+
+
+
 
 // "city_name": "Seattle",
 //      "lon": "-122.33207",

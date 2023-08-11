@@ -19,6 +19,7 @@ app.get("/weather", weatherHandler);
 app.get("/movies", moviesHandler);
 
 app.get("/", proofOfLife);
+
 app.listen(PORT, () => {
   console.log(`${PORT}`);
 });

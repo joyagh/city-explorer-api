@@ -1,38 +1,37 @@
 const axios = require("axios");
 
 class Movie {
-  constructor(title, overview, average, total, popularity, release, poster_path) {
+  constructor(title, overview, vote_average, vote_count, popularity, release_date, poster_path) {
     this.title = title;
     this.description = overview;
-    this.avgVotes = average;
-    this.totalVotes = total;
+    this.avgVotes = vote_average;
+    this.totalVotes = vote_count;
     this.popularity = popularity;
-    this.releaseDate = release;
+    this.releaseDate = release_date;
     this.imgUrl = poster_path;
   }
 }
 
 const moviesHandler = async (request, response) => {
-  let cityName = request.query.cityname;
+  let location = request.query.location;
   try {
     const movieKey = process.env.MOVIE_API_KEY;
     console.log(request.query);
 
     const movieData = await axios.get(
-      `https://api.themoviedb.org/3/search/movie?api_key=${movieKey}&query=${cityName}`
+      `https://api.themoviedb.org/3/search/movie?api_key=${movieKey}&query=${location}`
     ); //? city name
     //? let movies = [];
     //? if statement
     const result = movieData.data.results.map(
       (movie) => {
-          console.log(movie.original_title);
            let newMovie=  new Movie(
                movie.title, 
                movie.overview,
-               movie.average,
-               movie.total,
-               movie.popularity,
-               movie.release,
+               movie.vote_average,
+               movie.vote_count,
+               movie.popularity, 
+               movie.release_date,
                "https://image.tmdb.org/t/p/w500" + movie.poster_path,
                );
                console.log(newMovie);
@@ -48,13 +47,3 @@ const moviesHandler = async (request, response) => {
 
 module.exports = moviesHandler;
 
-//   movies.filter((movie) => {
-//    if (movie.title.includes("word")){
-//       movieData.push(movie.title)
-//    }
-
-// })
-// use includes instead of if statement
-// use return instead of push.
-
-//TODO Create movie class; title, image, description

@@ -8,7 +8,7 @@ class Movie {
     this.totalVotes = vote_count;
     this.popularity = popularity;
     this.releaseDate = release_date;
-    this.imgUrl = poster_path;
+    this.imgURL = poster_path;
   }
 }
 

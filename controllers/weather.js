@@ -1,22 +1,26 @@
 const axios = require("axios");
 
-class Forecast {
-     constructor(valid_date, description) {
-       this.date = valid_date;//? use datetime?
-       this.description = description;
-       //? this.datetime = datetime;
-     }
-   }
-//? cityName variable; event target
- const weatherHandler = async (request, response) => {
-     try {
-     const apiKey = process.env.WEATHER_API_KEY;
-     console.log(request.query);
+require('dotenv').config()
+const apiKey = process.env.WEATHER_API_KEY;
 
+class Forecast {
+  constructor(valid_date, description) {
+    this.date = valid_date;//? use datetime?
+    this.description = description;
+    //? this.datetime = datetime;
+  }
+}
+//? cityName variable; event target
+const weatherHandler = async (request, response) => {
+     try {
+    
+
+       
        const weatherData = await axios.get(
          `https://api.weatherbit.io/v2.0/forecast/daily?key=${apiKey}&days=16&lat=${request.query.lat}&lon=${request.query.lon}`
          );
          
+
          if (weatherData.data && weatherData.data.data.length > 0) {
               let dates = [];
              for (let i = 0; i < 10; i++){

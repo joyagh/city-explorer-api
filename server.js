@@ -4,6 +4,7 @@ const axios = require("axios");
 const proofOfLife  = require("./controllers");
 const weatherHandler  = require("./controllers/weather");
 const moviesHandler  = require("./controllers/movies"); // Weather Handler is in an object of weather file, must use {}.
+const getRecipes = require("./controllers/recipes");
 
 const app = express();
 app.use(cors());
@@ -19,6 +20,8 @@ app.get("/weather", weatherHandler);
 app.get("/movies", moviesHandler);
 
 app.get("/", proofOfLife);
+
+app.get('/recipes', getRecipes);
 
 app.listen(PORT, () => {
   console.log(`${PORT}`);
